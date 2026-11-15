@@ -1,0 +1,209 @@
+/* ---------- Tokens ---------- */
+:root {
+  --green-400: hsl(180, 29%, 50%);
+  --green-50: hsl(180, 52%, 96%);
+  --green-100: hsl(180, 31%, 95%); /* tag background */
+  --gray-400: hsl(180, 8%, 52%);
+  --green-900: hsl(180, 14%, 20%);
+  --white: hsl(0, 0%, 100%);
+  --shadow: 0 15px 20px -5px hsla(180, 29%, 50%, 0.2);
+  --radius: 0.3125rem;
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+* { margin: 0; }
+ul { padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; cursor: pointer; }
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "League Spartan", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--green-900);
+  background: var(--green-50);
+}
+
+/* ---------- Header banner ---------- */
+.hero {
+  height: 9.75rem;
+  background: var(--green-400) url(./images/bg-header-mobile.svg) center / cover no-repeat;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  width: min(100% - 3rem, 69.375rem);
+  margin-inline: auto;
+  padding-block: 3.5rem;
+}
+
+/* ---------- Filter bar ---------- */
+/*
+  Filter chip markup (rendered by JS):
+  li.chip > span.chip__label + button.chip__remove[data-tag]
+*/
+.filter-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: -5.75rem; /* pull up so it overlaps the banner */
+  margin-bottom: 3.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+.filter-bar__list { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+.chip {
+  display: flex;
+  overflow: hidden;
+  border-radius: var(--radius);
+  font-weight: 700;
+  color: var(--green-400);
+  background: var(--green-100);
+}
+.chip__label { padding: 0.3125rem 0.5rem 0.125rem; }
+.chip__remove {
+  width: 2rem;
+  border: 0;
+  background: var(--green-400) url(./images/icon-remove.svg) center / 0.875rem no-repeat;
+}
+.chip__remove:hover,
+.chip__remove:focus-visible { background-color: var(--green-900); }
+
+.filter-bar__clear {
+  flex-shrink: 0;
+  border: 0;
+  background: none;
+  font-weight: 700;
+  color: var(--gray-400);
+}
+.filter-bar__clear:hover,
+.filter-bar__clear:focus-visible { color: var(--green-400); text-decoration: underline; }
+
+/* ---------- Job cards ---------- */
+/*
+  Job card markup (rendered by JS):
+  li.job (+ .job--featured)
+    > img.job__logo
+    > div.job__info
+        > p.job__top > span.job__company + span.badge.badge--new + span.badge.badge--featured
+        > h2.job__position
+        > ul.job__details > li × 3 (postedAt, contract, location)
+    > ul.job__tags > li > button.tag[data-tag]
+*/
+.jobs { display: grid; gap: 2.5rem; }
+
+.job {
+  position: relative;
+  padding: 2rem 1.5rem 1.5rem;
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+/* Inset shadow instead of border, so featured cards keep the same content position */
+.job--featured { box-shadow: inset 5px 0 var(--green-400), var(--shadow); }
+
+.job__logo {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  translate: 0 -50%;
+}
+
+.job__top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.job__company { margin-right: 0.5rem; font-weight: 700; color: var(--green-400); }
+
+.badge {
+  padding: 0.375rem 0.5rem 0.125rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.badge--new { background: var(--green-400); }
+.badge--featured { background: var(--green-900); }
+
+.job__position {
+  margin-block: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+/* Hover state from the design (the title is not a link in this challenge) */
+.job:hover .job__position { color: var(--green-400); }
+
+.job__details { display: flex; flex-wrap: wrap; gap: 0.5rem; color: var(--gray-400); }
+.job__details li + li::before { content: "•"; margin-right: 0.5rem; }
+
+.job__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--gray-400);
+}
+
+.tag {
+  padding: 0.3125rem 0.5rem 0.125rem;
+  border: 0;
+  border-radius: var(--radius);
+  font-weight: 700;
+  color: var(--green-400);
+  background: var(--green-100);
+}
+.tag:hover,
+.tag:focus-visible { color: var(--white); background: var(--green-400); }
+
+.jobs__error { margin-bottom: 1.5rem; font-weight: 700; color: var(--green-900); }
+
+/* ---------- Footer ---------- */
+.attribution { padding-bottom: 2rem; font-size: 0.6875rem; text-align: center; }
+.attribution a { color: var(--green-400); }
+
+/* ---------- Desktop ---------- */
+@media (min-width: 56em) {
+  .hero { background-image: url(./images/bg-header-desktop.svg); }
+
+  .container { padding-block: 4.75rem; }
+  .filter-bar { margin-top: -7rem; margin-bottom: 2.5rem; padding-inline: 2.5rem; }
+  .jobs { gap: 1.5rem; }
+
+  .job {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 2.5rem;
+  }
+  .job__logo { position: static; width: 5.5rem; height: 5.5rem; translate: none; }
+  .job__position { font-size: 1.375rem; }
+
+  .job__tags {
+    justify-content: flex-end;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: 0;
+  }
+}
